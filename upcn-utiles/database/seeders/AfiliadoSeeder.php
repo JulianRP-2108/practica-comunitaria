@@ -33,6 +33,17 @@ class AfiliadoSeeder extends Seeder
             'telefono' => '2954646973',
             'localidad' => 'General Pico',
             'cantidadHijos' => 1,
+            'tipoEmpleado' => 'municipal',
+        ]);
+
+        DB::table('afiliados')->insert([
+            'nombre' => 'Marcela',
+            'apellido' => 'Baez',
+            'dni' => '24368062',
+            'email' => 'marcela'.'@gmail.com',
+            'telefono' => '2954999999',
+            'localidad' => 'Santa Rosa',
+            'cantidadHijos' => 2,
             'tipoEmpleado' => 'publico',
         ]);
     }

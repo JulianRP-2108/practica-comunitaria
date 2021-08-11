@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AsignacionController extends Controller
 {
@@ -51,19 +52,23 @@ class AsignacionController extends Controller
         $this->validarRequest($request);
 
         try{
-            $kit = Kit::where('id', $request->nivel)->first();
+            $kit = Kit::where('nivel', $request->nivel)->first();
             $afiliado = Afiliado::where('dni', $request->dni)->first();
             $kit->stock = $kit->stock - (int)$request->cantidad;
-            //Si kit->stock es negativo va a fallar el save (porque stock en la BD es unsigned)
-            $kit->save();
+            DB::transaction(function () use ($kit){
+                //Si kit->stock es negativo va a fallar el save (porque stock en la BD es unsigned)
+                $kit->save();
+                
+            });
 
             if($afiliado && $kit){
                 $asignacion->fkIdAfiliado = $afiliado->idAfiliado;
                 $asignacion->fkIdKit = $kit->idKit;
                 $asignacion->fkIdUsuario = Auth::id();
                 $asignacion->cantidad = (int)$request->cantidad;
-                
-                $asignacion->save();
+                DB::transaction(function () use ($asignacion){
+                    $asignacion->save();
+                });
 
                 $data = array(
                     'status' => 'success',

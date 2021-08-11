@@ -113,19 +113,34 @@ class KitController extends Controller
     public function stock(){
         try{
             $cantTotal = Kit::all()->sum('stock');
-            $kitInicial = Kit::where('nivel','inicial')->first();
-            $kitPrimario = Kit::where('nivel','primario')->first();
-            $kitSecundario = Kit::where('nivel','secundario')->first();
         }catch(Exception $e){
             abort(404);
         }
 
         return view('kits.stock',[
-            'cantKits' => $cantTotal,
-            'cantInicial' => $kitInicial->stock,
-            'cantPrimario' => $kitPrimario->stock,
-            'cantSecundario' => $kitSecundario->stock,
+            'cantKits' => $cantTotal
         ]);
+    }
+
+    public function stockGrafico(){
+        try{
+            $kits = Kit::all();
+            $data = [];
+            //construyo array con todos los kits y su stock
+            foreach($kits as $kit){
+                $aux = array(
+                    'nivel' => $kit->nivel,
+                    'stock' => $kit->stock
+                );
+                array_push($data,$aux);
+            }
+        }catch(Exception $e){
+            $data = array(
+                'status' => 'error'
+            );
+        }
+
+        return response()->json($data);
     }
 
     //Este metodo devuelve el formulario para poder actualizar el stock

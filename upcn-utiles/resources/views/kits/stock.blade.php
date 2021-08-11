@@ -3,7 +3,6 @@
 @section('title','Stock de kits')
 
 @section('content')
-
     {{-- Prueba de pie chart --}}
     <div class="card">
         <div class="card-header">
@@ -27,19 +26,31 @@
     
     
      <script>
-         const data = {
-            labels: [
-                'Inicial',
-                'Primario',
-                'Secundario'
-            ],
+         $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: '{{route('stockGrafico')}}',
+                success: function (response) {
+                    let labels = [];
+                    let stock = [];
+
+                    response.forEach(kit => {
+                        labels.push(kit['nivel']);
+                        stock.push(kit['stock']);
+                    });
+
+                    const data = {
+            labels: labels,
             datasets: [{
-                label: 'My First Dataset',
-                data: [{{ $cantInicial }}, {{ $cantPrimario }}, {{ $cantSecundario }}],
+                label: 'Stock de kits',
+                data: stock,
                 backgroundColor: [
                 'rgb(255, 99, 132)',
                 'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)'
+                'rgb(255, 205, 86)',
+                'rgb(102, 0, 102)',
+                'rgb(0, 255, 255)',
+                'rgb(255, 0, 255)',
                 ],
                 hoverOffset: 4
             }]
@@ -50,9 +61,17 @@
             data: data,
         };
 
-        $(document).ready(function () {
+        // $(document).ready(function () {
             var ctx = document.getElementById('myChart').getContext('2d');
             var myChart = new Chart(ctx, config);
+
+
+                }
+            });
+
+
+
+         
         });
     </script>
 

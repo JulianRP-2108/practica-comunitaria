@@ -17,7 +17,7 @@
             <select class="form-select" name="nivel" id="nivel" required>
                 @isset($kits)
                     @foreach ($kits as $kit)
-                        <option value={{$kit->id}}>Kit {{$kit->nivel}}</option>        
+                        <option value={{$kit->nivel}}>Kit {{$kit->nivel}}</option>        
                     @endforeach
                     
                 @endisset
