@@ -5,7 +5,7 @@ use App\Http\Controllers\AfiliadoController;
 use App\Http\Controllers\AsignacionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KitController;
-
+//comentario
 /*
 |--------------------------------------------------------------------------
 | Web Routes
