@@ -39,7 +39,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.0/dist/chart.min.js"></script>
     
     
-     <script>
+    <script>
         let myChart;
         $(document).ready(function () {
             updateChart({{$anio}});

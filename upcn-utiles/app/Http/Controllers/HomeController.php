@@ -17,8 +17,6 @@ class HomeController extends Controller{
             $kitsAsignados = Asignacion::all()->sum('cantidad');
             $cantAfiliados = Afiliado::all()->count();
 
-            $asignaciones = Asignacion::whereYear('created_at', '=', $anio)->get();
-
         }catch(Exception $e){
             abort(404);
         }
@@ -27,7 +25,7 @@ class HomeController extends Controller{
             'kitsAsignados' => $kitsAsignados,
             'cantAfiliados' => $cantAfiliados,
             'stockKits' => $stockKits,
-            'asignaciones' => $asignaciones
+            'anio' => $anio
         ]);
     }
 }

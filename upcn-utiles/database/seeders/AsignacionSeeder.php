@@ -35,7 +35,7 @@ class AsignacionSeeder extends Seeder
             ]);
         }
 
-        for($i=0; $i<10; $i++){
+        for($i=0; $i<1900; $i++){
             DB::table('asignaciones')->insert([
                 'fkIdAfiliado' => rand(1,3),
                 'fkIdKit' => rand(1,3),

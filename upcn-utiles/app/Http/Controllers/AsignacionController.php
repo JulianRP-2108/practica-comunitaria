@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Afiliado;
 use App\Models\Asignacion;
 use App\Models\Kit;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Exception;
 use Illuminate\Http\Request;
@@ -19,9 +20,12 @@ class AsignacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(){
+        $anio = Carbon::now()->year;
+
+        return view('asignaciones.index',[
+            'anio' => $anio
+        ]);
     }
 
     /**
@@ -167,6 +171,32 @@ class AsignacionController extends Controller
         }
         
         return response($data);
+    }
+
+    //DataTables
+    public function asignaciones(Request $request){
+        $anio = $request->anio;
+
+        $fechaInicio = Carbon::parse($anio . '-1-31');
+        $fechaFin = Carbon::parse($anio . '-12-31');
+        try{
+            $asignaciones = DB::table('asignaciones')
+            ->join('afiliados', 'asignaciones.fkIdAfiliado', '=', 'afiliados.idAfiliado')
+            // ->select('asignaciones.created_at','afiliados.nombre','afiliados.apellido',
+            // 'afiliados.dni','afiliados.telefono', 'afiliados.localidad', 'afiliados.cantidadHijos',
+            // 'asignaciones.cantidad','afiliados.tipoEmpleado')
+            ->select('*','asignaciones.created_at')
+            ->whereBetween('asignaciones.created_at', [$fechaInicio, $fechaFin])
+            ->get();
+
+            $data = array(
+                'data' => $asignaciones
+            );
+        }catch(Exception $e){
+            return back()->with('error', $e->getMessage());
+        }
+
+        return response()->json($data);
     }
 
     //validacion de los datos que llegan por request

@@ -35,8 +35,10 @@ Route::middleware(['auth'])->group(function () {
 //Graficos
 Route::get('/stock', [KitController::class, 'stock'])->name('stock');
 Route::get('/stockGrafico', [KitController::class, 'stockGrafico'])->name('stockGrafico');
-
 Route::get('/kitsEntregados', [KitController::class, 'kitsEntregados'])->name('kitsEntregados');
 Route::get('/graficoKitsEntregados', [KitController::class, 'graficoKitsEntregados'])->name('graficoKitsEntregados');
+
+//Datatables
+Route::get('/datatable/asignaciones', [AsignacionController::class, 'asignaciones'])->name('datatable.asignaciones');
 
 require __DIR__.'/auth.php';

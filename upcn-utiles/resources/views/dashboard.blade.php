@@ -60,6 +60,6 @@
     </div>
 
 
-    @include('asignaciones.index')
+    @include('asignaciones.ultimas')
 
 @endsection

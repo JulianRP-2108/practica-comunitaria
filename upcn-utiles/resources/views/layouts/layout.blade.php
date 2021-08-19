@@ -54,12 +54,17 @@
                     <a style=" background-color: rgb(16, 66, 104)" href={{ route('afiliados.create') }} class="text-info list-group-item">Crear Afiliado </a>
                 </div>
 
+                <a style=" background-color: rgb(16, 66, 104)" href="#menuAsignaciones" class="text-light list-group-item list-group-item-action list-group-item p-3 collapsed" data-toggle="collapse" aria-expanded="false"><i class="fas fa-file-signature"></i> <span class="hidden-sm-down">Asignaciones</span> <i class="fas fa-sort-down"></i></a>
+                <div class="collapse" id="menuAsignaciones" data-parent="#sidebar-wrapper">
+                    <a style=" background-color: rgb(16, 66, 104)" href={{route('asignaciones.create')}} class="text-info list-group-item">Entregar Kit </a>
+                    <a style=" background-color: rgb(16, 66, 104)" href={{ route('asignaciones.index') }} class="text-info list-group-item">Listado de Asignaciones </a>
+                </div>
+
                 <a style=" background-color: rgb(16, 66, 104)" href="#menuKits" class="text-light list-group-item list-group-item-action list-group-item p-3 collapsed" data-toggle="collapse" aria-expanded="false"><i class="fas fa-pencil-ruler"></i> <span class="hidden-sm-down">Kits escolares</span> <i class="fas fa-sort-down"></i></a>
                 <div class="collapse" id="menuKits" data-parent="#sidebar-wrapper">
                     {{-- <a style=" background-color: rgb(16, 66, 104)" href="{{route('kits.index')}}" class="text-info list-group-item">Listado de Kits </a> --}}
                     <a style=" background-color: rgb(16, 66, 104)" href="{{route('kits.create')}}" class="text-info list-group-item">Agregar Kit </a>
                     <a style=" background-color: rgb(16, 66, 104)" href="{{route('cargarStock')}}" class="text-info list-group-item">Cargar Stock </a>
-                    <a style=" background-color: rgb(16, 66, 104)" href={{route('asignaciones.create')}} class="text-info list-group-item">Entregar Kit </a>
                 </div>
 
                 <a style=" background-color: rgb(16, 66, 104)" href={{route('logout')}} class="text-light list-group-item list-group-item-action list-group-item p-3">
