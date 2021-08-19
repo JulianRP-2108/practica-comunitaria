@@ -146,7 +146,7 @@ class AsignacionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-        
+        //faltaria despues de borrar reasignar el stock
         try{
             $asignacion = Asignacion::find($id);
 

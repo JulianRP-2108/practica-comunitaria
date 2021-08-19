@@ -37,7 +37,8 @@
                                 <th>Localidad</th>
                                 <th>Nº Hijos</th>
                                 <th>Kits asignados</th>
-                                <th>Tipo empleado</th>
+                                {{-- <th>Tipo empleado</th> --}}
+                                <th>Opciones</th>
                             </tr>
                         </thead>
                     </table>
@@ -46,68 +47,29 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="exampleModalBody">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" id="btnEliminarFila">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<script>
-    $(document).ready(function () {
-        //Cuando cambia el select
-        $('#anio').on('change', function () {
-            $.ajax({
-                type: "GET",
-                url: "{{route('datatable.asignaciones')}}",
-                data: {
-                    anio: $("#anio").val()
-                },
-                success: function (response) {
-                    // console.log(response);
-                    tabla.clear().rows.add(response.data).draw();
-                }
-            });
-
-        });
-
-        var tabla = $('#tablaAsignaciones').DataTable( {
-        ajax: {
-            url: "{{route('datatable.asignaciones')}}",
-            method: 'GET',
-            data: {
-                anio: $('#anio').val()
-            },
-            dataSrc: 'data'
-        },
-        columns: [
-            { data: 'created_at' },
-            { data: 'nombre' },
-            { data: 'apellido' },
-            { data: 'dni' },
-            { data: 'telefono' },
-            { data: 'localidad' },
-            { data: 'cantidadHijos' },
-            { data: 'cantidad' },
-            { data: 'tipoEmpleado' }
-        ],
-        responsive: true,
-        autoWidth: false,
-        "language": {
-            "lengthMenu": "Mostrar _MENU_ registros",
-            "search":         "Buscar:",
-            "info":           "Mostrando _START_ a _END_ de _TOTAL_ registros",
-            "infoFiltered":   "(filtrado de _MAX_ registros)",
-            "zeroRecords":    "No se encontraron registros",
-            "paginate": {
-                "first":      "Primera",
-                "last":       "Ultima",
-                "next":       "Siguiente",
-                "previous":   "Anterior"
-            }
-        },
-        "deferRender": true,
-        "order": [ 0, "desc" ]
-    } );
-        
-        
-    });
-
-</script>
+{{-- Scripts para datatable y modal --}}
+@include('asignaciones.scriptIndex')
 
 @endsection
