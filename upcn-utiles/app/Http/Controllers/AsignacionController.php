@@ -146,31 +146,34 @@ class AsignacionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-        //faltaria despues de borrar reasignar el stock
         try{
             $asignacion = Asignacion::find($id);
+            $kit = Kit::find($asignacion->fkIdKit);
+            $kit->stock = $kit->stock + $asignacion->cantidad;
 
             if($asignacion){
-                $asignacion->delete();
+                DB::transaction(function () use ($asignacion,$kit){
+                    $asignacion->delete();
+                    $kit->save();
+                });
                 $data = array(
                     'status' => 'success',
-                    'asignacion' => $asignacion
+                    'message' => 'Asignación borrada correctamente.',
                 );
             }else{
                 $data = array(
                     'status' => 'error',
-                    'message' => 'No se pudo encontrar el afiliado'
+                    'message' => 'Error al borrar la asignación.'
                 );
             }
         }catch(Exception $e){
             $data = array(
                 'status' => 'error',
-                'message' => 'Error'
+                'message' => $e->getMessage()
             );
-            abort(404);
         }
         
-        return response($data);
+        return response()->json($data);
     }
 
     //DataTables

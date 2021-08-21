@@ -9,6 +9,10 @@
             <h2>Listado de Asignaciones</h2>
         </div>
     </div>
+
+    <div class="row" id="alert">
+    </div>
+
     <div class="row mb-2 w-75">
         <select class="form-select" name="anio" id="anio" required>
             @for ($i = $anio-5; $i <= $anio ; $i++)

@@ -86,13 +86,13 @@
             <div class="container-fluid p-2">
                 @if (session('success'))
                     <div class="alert alert-outline alert-success d-flex align-items-center" role="alert">
-                        <i data-feather="alert-circle" class="mg-r-10"></i>{{ session('success') }}
+                        <i data-feather="alert-circle" class="mg-r-10">{{ session('success') }}</i>
                     </div>
                 @endif
 
                 @if (session('error'))
                     <div class="alert alert-outline alert-danger d-flex align-items-center" role="alert">
-                        <i data-feather="alert-circle" class="mg-r-10"></i>{{ session('error') }}
+                        <i data-feather="alert-circle" class="mg-r-10">{{ session('error') }}</i>
                     </div>
                 @endif
                 

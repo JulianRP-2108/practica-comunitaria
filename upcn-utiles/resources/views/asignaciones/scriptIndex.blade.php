@@ -83,8 +83,21 @@
                 $.ajax({
                     type: "DELETE",
                     url: `/asignaciones/${id}`,
+                    error: function(response){
+                        $('#exampleModal').modal('hide');
+
+                        $('#alert').html(`
+                        <div class="alert alert-outline alert-danger d-flex align-items-center" role="alert">
+                            <i data-feather="alert-circle" class="mg-r-10">Error al borrar la asignación.</i>
+                        </div>
+                        `);
+                        setTimeout(function(){
+                            $('#alert').html('');
+                        }, 2000);
+                    },
                     success: function (response) {
                         $('#exampleModal').modal('hide');
+                        
                         //recarga la tabla
                         $.ajax({
                             type: "GET",
@@ -93,10 +106,20 @@
                                 anio: $("#anio").val()
                             },
                             success: function (response) {
-                                // console.log(response);
                                 tabla.clear().rows.add(response.data).draw();
                             }
                         });
+
+                        if(response.status == 'success'){
+                            $('#alert').html(`
+                            <div class="alert alert-outline alert-success d-flex align-items-center" role="alert">
+                                <i data-feather="alert-circle" class="mg-r-10">${response.message}</i>
+                            </div>
+                            `);
+                            setTimeout(function(){
+                                $('#alert').html('');
+                            }, 2000);
+                        }
                     }
                 });
             });
