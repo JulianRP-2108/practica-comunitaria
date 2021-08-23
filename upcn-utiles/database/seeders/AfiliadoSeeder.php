@@ -40,7 +40,7 @@ class AfiliadoSeeder extends Seeder
             'nombre' => 'Marcela',
             'apellido' => 'Baez',
             'dni' => '24368062',
-            'email' => 'marcela'.'@gmail.com',
+            'email' => 'nelimar_baez'.'@hotmail.com',
             'telefono' => '2954999999',
             'localidad' => 'Santa Rosa',
             'cantidadHijos' => 2,
