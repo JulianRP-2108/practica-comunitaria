@@ -31,8 +31,7 @@
                 <label for="descriptionText">Descripción (Opcional)</label>
 
                 <div class="col">
-                    <textarea class="form-control" name="descripcion" id="descriptionText"  rows="10" maxlength="140">
-                    </textarea>
+                    <textarea class="form-control" name="descripcion" id="descriptionText"  rows="10" maxlength="140"></textarea>
                 </div>
             </div>
 

@@ -7,6 +7,7 @@ use App\Models\Kit;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class KitController extends Controller
 {
@@ -82,9 +83,14 @@ class KitController extends Controller
      * @param  \App\Models\Kit  $kit
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kit $kit)
-    {
-        //
+    public function edit($id){
+        try{
+            $kit = Kit::find($id);
+        }catch(Exception $e){
+            return back()->with('error',$e->getMessage());
+        }
+
+        return view('kits.edit',['kit' => $kit]);
     }
 
     /**
@@ -94,9 +100,21 @@ class KitController extends Controller
      * @param  \App\Models\Kit  $kit
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kit $kit)
-    {
-        //
+    public function update(Request $request, Kit $kit){//$kit ya viene asociado con el id que mando desde el front
+        //validacion de los datos que llegan por request
+        $this->validarRequest($request);
+        $kit->nivel = $request->nivel;
+        $kit->descripcion = $request->descripcion;
+
+        try{
+            DB::transaction(function () use($kit) {
+                $kit->save();
+            });
+        }catch(Exception $e){
+            return back()->with('error',$e->getMessage());
+        }
+
+        return redirect(route('kits.index'))->with('success','Kit modificado con éxito.');
     }
 
     /**
@@ -105,9 +123,13 @@ class KitController extends Controller
      * @param  \App\Models\Kit  $kit
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kit $kit)
-    {
-        //
+    public function destroy(Kit $kit){
+        try{
+            $kit->delete();
+        }catch(Exception $e){
+            return back()->with('error',$e->getMessage());
+        }
+        return redirect(route('kits.index'))->with('success','Kit borrado con éxito.');
     }
 
     public function stock(){
@@ -209,5 +231,21 @@ class KitController extends Controller
             'anio' => $anio
         ]);
         return $response;
+    }
+
+    //validacion de los datos que llegan por request
+    public function validarRequest($request) : void{
+        $validator = Validator::make($request->all(), [
+            'nivel' => 'string|required|max:30',
+            'descripcion' => 'string|required',
+        ]);
+        if ($validator->fails()) {
+            //se manda automaticamente la variable $errors al blade
+            //habria que cambiar a otro blade, solo estaba probando
+            // return redirect(route('404'))
+            //             ->withErrors($validator)
+            //             ->withInput();
+            abort(404);
+        }
     }
 }
